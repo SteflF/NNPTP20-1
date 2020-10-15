@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using INPTPZ1.Mathematics;
 
 namespace INPTPZ1
 {
@@ -36,13 +35,13 @@ namespace INPTPZ1
 
             List<ComplexNumber> koreny = new List<ComplexNumber>();
             // TODO: poly should be parameterised?
-            Poly p = new Poly();
+            Polynomial p = new Polynomial();
             p.Coe.Add(new ComplexNumber() { Real = 1 });
             p.Coe.Add(ComplexNumber.Zero);
             p.Coe.Add(ComplexNumber.Zero);
             //p.Coe.Add(Cplx.Zero);
             p.Coe.Add(new ComplexNumber() { Real = 1 });
-            Poly pd = p.Derive();
+            Polynomial pd = p.Derive();
 
             Console.WriteLine(p);
             Console.WriteLine(pd);
@@ -125,68 +124,6 @@ namespace INPTPZ1
             }
 
             bmp.Save(output ?? "../../../out.png");
-        }
-    }
-
-    namespace Mathematics
-	{
-		class Poly
-        {
-            public List<ComplexNumber> Coe { get; set; }
-
-            public Poly() => Coe = new List<ComplexNumber>();
-
-            public Poly Derive()
-            {
-                Poly p = new Poly();
-                for (int i = 1; i < Coe.Count; i++)
-                {
-                    p.Coe.Add(Coe[i].Multiply(new ComplexNumber() { Real = i }));
-                }
-
-                return p;
-            }
-
-            public ComplexNumber Eval(ComplexNumber x)
-            {
-                ComplexNumber s = ComplexNumber.Zero;
-                for (int i = 0; i < Coe.Count; i++)
-                {
-                    ComplexNumber coef = Coe[i];
-                    ComplexNumber bx = x;
-                    int power = i;
-
-                    if (i > 0)
-                    {
-                        for (int j = 0; j < power - 1; j++)
-                            bx = bx.Multiply(x);
-
-                        coef = coef.Multiply(bx);
-                    }
-
-                    s = s.Add(coef);
-                }
-
-                return s;
-            }
-
-            public override string ToString()
-            {
-                string s = "";
-                for (int i = 0; i < Coe.Count; i++)
-                {
-                    s += Coe[i];
-                    if (i > 0)
-                    {
-                        for (int j = 0; j < i; j++)
-                        {
-                            s += "x";
-                        }
-                    }
-                    s += " + ";
-                }
-                return s;
-            }
         }
     }
 }
