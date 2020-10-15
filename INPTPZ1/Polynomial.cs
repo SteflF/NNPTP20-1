@@ -4,50 +4,54 @@ namespace INPTPZ1
 {
 	class Polynomial
     {
-        public List<ComplexNumber> Coe { get; set; }
-
-        public Polynomial() => Coe = new List<ComplexNumber>();
+        public List<ComplexNumber> Coefficients { get; set; } = new List<ComplexNumber>();
 
         public Polynomial Derive()
         {
-            Polynomial p = new Polynomial();
-            for (int i = 1; i < Coe.Count; i++)
+            Polynomial polynomial = new Polynomial();
+
+            for (int i = 1; i < Coefficients.Count; i++)
             {
-                p.Coe.Add(Coe[i].Multiply(new ComplexNumber() { Real = i }));
+                polynomial.Coefficients.Add(Coefficients[i].Multiply(new ComplexNumber() { Real = i }));
             }
 
-            return p;
+            return polynomial;
         }
 
-        public ComplexNumber Eval(ComplexNumber x)
+        public ComplexNumber Evaluate(ComplexNumber inputComplexNumber)
         {
-            ComplexNumber s = ComplexNumber.Zero;
-            for (int i = 0; i < Coe.Count; i++)
+            ComplexNumber evaluation = ComplexNumber.Zero;
+
+            for (int i = 0; i < Coefficients.Count; i++)
             {
-                ComplexNumber coef = Coe[i];
-                ComplexNumber bx = x;
+                ComplexNumber coefficitent = Coefficients[i];
+                ComplexNumber copyOfTheInput = inputComplexNumber;
                 int power = i;
 
                 if (i > 0)
                 {
                     for (int j = 0; j < power - 1; j++)
-                        bx = bx.Multiply(x);
+					{
+                        copyOfTheInput = copyOfTheInput.Multiply(inputComplexNumber);
+                    }
 
-                    coef = coef.Multiply(bx);
+                    coefficitent = coefficitent.Multiply(copyOfTheInput);
                 }
 
-                s = s.Add(coef);
+                evaluation = evaluation.Add(coefficitent);
             }
 
-            return s;
+            return evaluation;
         }
 
         public override string ToString()
         {
-            string s = "";
-            for (int i = 0; i < Coe.Count; i++)
+            string s = string.Empty;
+
+            for (int i = 0; i < Coefficients.Count; i++)
             {
-                s += Coe[i];
+                s += Coefficients[i];
+
                 if (i > 0)
                 {
                     for (int j = 0; j < i; j++)
@@ -55,9 +59,11 @@ namespace INPTPZ1
                         s += "x";
                     }
                 }
+
                 s += " + ";
             }
-            return s;
+
+            return s.TrimEnd('+');
         }
     }
 }
