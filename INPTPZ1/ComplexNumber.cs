@@ -2,87 +2,63 @@
 
 namespace INPTPZ1
 {
-
 	namespace Mathematics
 	{
 		public class ComplexNumber
         {
-            public double Re { get; set; }
-            public float Imaginari { get; set; }
+            public double Real { get; set; }
 
-            public override bool Equals(object obj)
-            {
-                if (obj is ComplexNumber)
-                {
-                    ComplexNumber x = obj as ComplexNumber;
-                    return x.Re == Re && x.Imaginari == Imaginari;
-                }
-                return base.Equals(obj);
-            }
+			public double Imaginary { get; set; }
 
             public readonly static ComplexNumber Zero = new ComplexNumber()
             {
-                Re = 0,
-                Imaginari = 0
+                Real = 0,
+                Imaginary = 0
             };
 
             public ComplexNumber Multiply(ComplexNumber b)
             {
-                ComplexNumber a = this;
-                // aRe*bRe + aRe*bIm*i + aIm*bRe*i + aIm*bIm*i*i
                 return new ComplexNumber()
                 {
-                    Re = a.Re * b.Re - a.Imaginari * b.Imaginari,
-                    Imaginari = (float)(a.Re * b.Imaginari + a.Imaginari * b.Re)
+                    Real = Real * b.Real - Imaginary * b.Imaginary,
+                    Imaginary = Real * b.Imaginary + Imaginary * b.Real
                 };
-            }
-            public double GetAbS()
-            {
-                return Math.Sqrt( Re * Re + Imaginari * Imaginari);
             }
 
             public ComplexNumber Add(ComplexNumber b)
             {
-                ComplexNumber a = this;
                 return new ComplexNumber()
                 {
-                    Re = a.Re + b.Re,
-                    Imaginari = a.Imaginari + b.Imaginari
+                    Real = Real + b.Real,
+                    Imaginary = Imaginary + b.Imaginary
                 };
             }
-            public double GetAngleInDegrees()
-            {
-                return Math.Atan(Imaginari / Re);
-            }
+
             public ComplexNumber Subtract(ComplexNumber b)
             {
-                ComplexNumber a = this;
                 return new ComplexNumber()
                 {
-                    Re = a.Re - b.Re,
-                    Imaginari = a.Imaginari - b.Imaginari
+                    Real = Real - b.Real,
+                    Imaginary = Imaginary - b.Imaginary
                 };
             }
 
             public override string ToString()
             {
-                return $"({Re} + {Imaginari}i)";
+                return $"({Real} + {Imaginary}i)";
             }
 
             internal ComplexNumber Divide(ComplexNumber b)
             {
-                // (aRe + aIm*i) / (bRe + bIm*i)
-                // ((aRe + aIm*i) * (bRe - bIm*i)) / ((bRe + bIm*i) * (bRe - bIm*i))
-                //  bRe*bRe - bIm*bIm*i*i
-                var tmp = this.Multiply(new ComplexNumber() { Re = b.Re, Imaginari = -b.Imaginari });
-                var tmp2 = b.Re * b.Re + b.Imaginari * b.Imaginari;
+                ComplexNumber numerator = Multiply(new ComplexNumber() { Real = b.Real, Imaginary = -b.Imaginary });
+                double divisor = b.Real * b.Real + b.Imaginary * b.Imaginary;
 
                 return new ComplexNumber()
                 {
-                    Re = tmp.Re / tmp2,
-                    Imaginari = (float)(tmp.Imaginari / tmp2)
+                    Real = numerator.Real / divisor,
+                    Imaginary = (numerator.Imaginary / divisor)
                 };
             }
-        }
+		}
     }
 }

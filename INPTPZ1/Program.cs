@@ -37,11 +37,11 @@ namespace INPTPZ1
             List<ComplexNumber> koreny = new List<ComplexNumber>();
             // TODO: poly should be parameterised?
             Poly p = new Poly();
-            p.Coe.Add(new ComplexNumber() { Re = 1 });
+            p.Coe.Add(new ComplexNumber() { Real = 1 });
             p.Coe.Add(ComplexNumber.Zero);
             p.Coe.Add(ComplexNumber.Zero);
             //p.Coe.Add(Cplx.Zero);
-            p.Coe.Add(new ComplexNumber() { Re = 1 });
+            p.Coe.Add(new ComplexNumber() { Real = 1 });
             Poly pd = p.Derive();
 
             Console.WriteLine(p);
@@ -66,14 +66,14 @@ namespace INPTPZ1
 
                     ComplexNumber ox = new ComplexNumber()
                     {
-                        Re = x,
-                        Imaginari = (float)(y)
+                        Real = x,
+                        Imaginary = (float)(y)
                     };
 
-                    if (ox.Re == 0)
-                        ox.Re = 0.0001;
-                    if (ox.Imaginari == 0)
-                        ox.Imaginari = 0.0001f;
+                    if (ox.Real == 0)
+                        ox.Real = 0.0001;
+                    if (ox.Imaginary == 0)
+                        ox.Imaginary = 0.0001f;
 
                     //Console.WriteLine(ox);
 
@@ -85,7 +85,7 @@ namespace INPTPZ1
                         ox = ox.Subtract(diff);
 
                         //Console.WriteLine($"{q} {ox} -({diff})");
-                        if (Math.Pow(diff.Re, 2) + Math.Pow(diff.Imaginari, 2) >= 0.5)
+                        if (Math.Pow(diff.Real, 2) + Math.Pow(diff.Imaginary, 2) >= 0.5)
                         {
                             q--;
                         }
@@ -99,7 +99,7 @@ namespace INPTPZ1
                     var id = 0;
                     for (int w = 0; w <koreny.Count;w++)
                     {
-                        if (Math.Pow(ox.Re- koreny[w].Re, 2) + Math.Pow(ox.Imaginari - koreny[w].Imaginari, 2) <= 0.01)
+                        if (Math.Pow(ox.Real- koreny[w].Real, 2) + Math.Pow(ox.Imaginary - koreny[w].Imaginary, 2) <= 0.01)
                         {
                             known = true;
                             id = w;
@@ -141,7 +141,7 @@ namespace INPTPZ1
                 Poly p = new Poly();
                 for (int i = 1; i < Coe.Count; i++)
                 {
-                    p.Coe.Add(Coe[i].Multiply(new ComplexNumber() { Re = i }));
+                    p.Coe.Add(Coe[i].Multiply(new ComplexNumber() { Real = i }));
                 }
 
                 return p;
