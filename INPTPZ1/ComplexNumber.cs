@@ -41,12 +41,7 @@ namespace INPTPZ1
 			};
 		}
 
-		public override string ToString()
-		{
-			return $"({Real} + {Imaginary}i)";
-		}
-
-		internal ComplexNumber Divide(ComplexNumber number)
+		public ComplexNumber Divide(ComplexNumber number)
 		{
 			ComplexNumber numerator = Multiply(new ComplexNumber() { Real = number.Real, Imaginary = -number.Imaginary });
 			double divisor = (number.Real * number.Real) + (number.Imaginary * number.Imaginary);
@@ -56,6 +51,11 @@ namespace INPTPZ1
 				Real = numerator.Real / divisor,
 				Imaginary = numerator.Imaginary / divisor
 			};
+		}
+
+		public override string ToString()
+		{
+			return $"({Real} + {Imaginary}i)";
 		}
 	}
 }
